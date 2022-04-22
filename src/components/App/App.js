@@ -19,7 +19,8 @@ class App extends Component {
             <Router>
                 <Header/>
                 <main>
-                    <Route path={"/books"} exact render={() => <Books books={this.state.books}/>}/>
+                    <Route path={"/books"} exact
+                           render={() => <Books books={this.state.books} onDelete={this.deleteBooks}/>}/>
                     <Route path={"/categories"} exact render={() => <Categories/>}/>
                     <Redirect to={"/books"}/>
                 </main>
@@ -33,6 +34,13 @@ class App extends Component {
                 this.setState({
                     books: data.data
                 })
+            });
+    }
+
+    deleteBooks = (id) => {
+        LibraryRepository.deleteBooks(id)
+            .then(() => {
+                this.loadBooks();
             });
     }
 
