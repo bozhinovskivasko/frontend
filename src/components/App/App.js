@@ -1,7 +1,10 @@
 import './App.css';
 import React, {Component} from "react";
-import Books from "../Books/books";
+import {BrowserRouter as Router, Redirect, Route} from 'react-router-dom'
+import Books from "../Books/BookList/books";
 import LibraryRepository from "../../repository/libraryRepository";
+import Categories from "../Categories/categories";
+import Header from "../Header/header";
 
 class App extends Component {
     constructor(props) {
@@ -13,9 +16,14 @@ class App extends Component {
 
     render() {
         return (
-            <div>
-                <Books books={this.state.books}/>
-            </div>
+            <Router>
+                <Header/>
+                <main>
+                    <Route path={"/books"} exact render={() => <Books books={this.state.books}/>}/>
+                    <Route path={"/categories"} exact render={() => <Categories/>}/>
+                    <Redirect to={"/books"}/>
+                </main>
+            </Router>
         );
     }
 

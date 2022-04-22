@@ -1,11 +1,12 @@
 import React from "react";
+import BookItem from "../BookItem/bookItem";
 
 const Books = (props) => {
     return (
-        <div>
-            <div>
-                <div>
-                    <table>
+        <div className={"container mm-4 mt-5"}>
+            <div className={"row"}>
+                <div className={"table-responsive"}>
+                    <table className={"table table-striped"}>
                         <thead>
                         <tr>
                             <th scope={"col"}>Name</th>
@@ -17,12 +18,7 @@ const Books = (props) => {
                         <tbody>
                         {props.books.map((item) => {
                             return (
-                                <tr>
-                                    <td>{item.name}</td>
-                                    <td>{item.category}</td>
-                                    <td>{item.author.fullName}</td>
-                                    <td>{item.availableCopies}</td>
-                                </tr>
+                                <BookItem item={item}/>
                             );
                         })}
                         </tbody>
