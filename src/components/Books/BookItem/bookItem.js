@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from "react-router-dom";
 
 const BookItem = (props) => {
     return (
@@ -11,6 +12,13 @@ const BookItem = (props) => {
                 <a title={"Delete"} className={"btn btn-danger"}
                    onClick={() => props.onDelete(props.item.id)}
                 >Delete</a>
+                <Link className={"btn btn-info ml-2"}
+                      onClick={() => props.onEdit(props.item.id)}
+                      to={`/books/edit/${props.item.id}`}
+                >Edit</Link>
+                <a title={"Mark As Taken"} className={"btn btn-success ml-2"}
+                   onClick={() => props.onMarkAsTaken(props.item.id)}
+                >Mark As Taken</a>
             </td>
         </tr>
     );

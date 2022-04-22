@@ -15,7 +15,18 @@ const LibraryRepository = {
 
     addBooks: (name, category, authorId, availableCopies) => {
         return axios.post(`/books/add?name=${name}&category=${category}&authorId=${authorId}&availableCopies=${availableCopies}`);
-        ///add?name=Eyes&category=DRAMA&authorId=1&availableCopies=6
+    },
+
+    editBooks: (id, name, category, authorId, availableCopies) => {
+        return axios.put(`/books/edit/${id}?name=${name}&category=${category}&authorId=${authorId}&availableCopies=${availableCopies}`);
+    },
+
+    getBook: (id) => {
+        return axios.get(`/books/${id}`);
+    },
+
+    markAsTakenBook: (id) => {
+        return axios.put(`/books/rent/${id}`);
     }
 }
 
