@@ -5,12 +5,14 @@ import Books from "../Books/BookList/books";
 import LibraryRepository from "../../repository/libraryRepository";
 import Categories from "../Categories/categories";
 import Header from "../Header/header";
+import BooksAdd from "../Books/BooksAdd/booksAdd";
 
 class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            books: []
+            books: [],
+            authors: []
         }
     }
 
@@ -19,10 +21,12 @@ class App extends Component {
             <Router>
                 <Header/>
                 <main>
+                    <Route path={"/books/add"} exact
+                           render={() => <BooksAdd authors={this.state.authors} onAddBook={this.addBooks}/>}/>
                     <Route path={"/books"} exact
                            render={() => <Books books={this.state.books} onDelete={this.deleteBooks}/>}/>
                     <Route path={"/categories"} exact render={() => <Categories/>}/>
-                    <Redirect to={"/books"}/>
+                    {/*<Redirect to={"/books"}/>*/}
                 </main>
             </Router>
         );
@@ -37,6 +41,15 @@ class App extends Component {
             });
     }
 
+    loadAuthors = () => {
+        LibraryRepository.fetchAuthors()
+            .then((data) => {
+                this.setState({
+                    authors: data.data
+                })
+            });
+    }
+
     deleteBooks = (id) => {
         LibraryRepository.deleteBooks(id)
             .then(() => {
@@ -44,8 +57,16 @@ class App extends Component {
             });
     }
 
+    addBooks = (name, category, authorId, availableCopies) => {
+        LibraryRepository.addBooks(name, category, authorId, availableCopies)
+            .then(() => {
+                this.loadBooks();
+            });
+    }
+
     componentDidMount() {
         this.loadBooks();
+        this.loadAuthors();
     }
 }
 
